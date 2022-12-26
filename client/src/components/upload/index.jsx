@@ -1,24 +1,13 @@
 import { AppContext } from "../../context/index";
 import React, { useContext } from "react";
-// import style from "./style.module.css";
-
-// const Upload = () => {
-//   // fetch files from the context
-//   const { status, setStatus } = useContext(AppContext);
-
-//   // Methods
-
-//   return <div className={style.container}></div>;
-// };
-
-// export default Upload;
-
-import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
 
-import "./style.css"
+import style from "./style.css";
 
-function App() {
+const Upload = () => {
+  // fetch files from the context
+  const { status, setStatus } = useContext(AppContext);
+
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
   const onChange = (imageList, addUpdateIndex) => {
@@ -44,7 +33,7 @@ function App() {
           onImageUpdate,
           onImageRemove,
           isDragging,
-          dragProps
+          dragProps,
         }) => (
           // write your building UI
           <div className="upload__image-wrapper">
@@ -71,7 +60,6 @@ function App() {
       </ImageUploading>
     </div>
   );
-}
+};
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+export default Upload;
