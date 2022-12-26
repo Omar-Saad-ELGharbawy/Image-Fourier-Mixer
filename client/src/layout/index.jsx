@@ -6,7 +6,10 @@ import img from "../globals/assets/0.jpg";
 const Layout = () => {
   return (
     <div>
-      <Select img={img} type={1} />
+      <Select
+        img={<img src={img} style={{ width: "800px" }} alt="img" />}
+        type={1}
+      />
     </div>
   );
 };
