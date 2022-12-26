@@ -34,7 +34,7 @@ const Select = ({ img, type }) => {
         setCrop(c);
       }}
     >
-      {img}
+      <img src={img} style={{ width: "50%" }} alt="img" />
     </ReactCrop>
   );
 };
