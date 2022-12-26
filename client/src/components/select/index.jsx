@@ -1,11 +1,11 @@
 import { AppContext } from "../../context/index";
 import React, { useContext, useState } from "react";
-import style from "./style.module.css";
+// import style from "./style.module.css";
 import "react-image-crop/dist/ReactCrop.css";
 import ReactCrop from "react-image-crop";
-import img from "../../globals/assets/0.jpg";
+import axios from "../../globals/api/axios";
 
-const Select = () => {
+const Select = ({ img, type }) => {
   // fetch files from the context
   const { status, setStatus } = useContext(AppContext);
   const [crop, setCrop] = useState({
@@ -17,21 +17,24 @@ const Select = () => {
   });
   // Methods
 
+  const on_change = (c) => {
+    axios.post("/update", { dimensions: c }).then((res) => {
+      console.log(res.data);
+    });
+  };
+
   return (
     <ReactCrop
       crop={crop}
-      onDragStart={(e) => {
-        console.log(e);
-      }}
       onComplete={(crop, perc) => {
         console.log(crop, perc);
+        on_change(perc);
       }}
       onChange={(c) => {
         setCrop(c);
-        // console.log(c);
       }}
     >
-      <img src={img} style={{ width: "800px" }} alt="img" />
+      {img}
     </ReactCrop>
   );
 };
