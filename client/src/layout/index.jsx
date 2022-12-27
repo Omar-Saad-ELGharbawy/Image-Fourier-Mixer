@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <div>
       <UploadImage />
-      <Upload />
+      {/* <Upload /> */}
     </div>
   );
 };

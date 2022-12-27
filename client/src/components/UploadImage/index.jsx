@@ -22,14 +22,16 @@ const UploadImage = () => {
 
   return (
     <div className="upload-audio">
-      <button onClick={handleButtonClick}>
+      <button onClick={handleButtonClick} style={{ width: "300px", height: "300px", backgroundColor: "#fd5c63" , border:"none", borderRadius:"15px"}}>
         {isUploaded ? (
-          <img src={file} alt="" style={{ width: "300px", height: "300px" }} />
+          <img src={file} alt="" style={{ width: "300px", height: "300px", borderRadius:"15px" }} />
         ) : (
           <div
-            style={{ width: "300px", height: "300px", backgroundColor: "red" }}
+            // style={{ width: "300px", height: "300px", backgroundColor: "#E9967A" , border:"none", borderRadius:"10px", display:"flex", alignContent:"center", alignItems:"center"}}
           >
+            <div style={{ color:"white", position:"relative", left:"0%", fontSize:"20px"}}>
             Upload an image
+            </div>
           </div>
         )}
       </button>
