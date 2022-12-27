@@ -46,11 +46,11 @@ const UploadImage = ({ type }) => {
   };
 
   return (
-    <div className={style.container}>
+    <div className={style.container} style={{}}>
       <button
         className={style.close}
         onClick={close_image}
-        style={{ visibility: isUploaded ? "visible" : "hidden" }}
+        style={{ visibility: !isUploaded ? "visible" : "hidden" }}
       >
         x
       </button>

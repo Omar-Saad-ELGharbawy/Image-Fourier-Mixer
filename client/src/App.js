@@ -1,17 +1,9 @@
 import React from "react";
 import "./App.css";
-import Layout from "./layout";
+import Layout from "./components/layout/index";
 
 function App() {
-  return (
-    <div>
-      <div className="area" >
-      <p>Image Combiner</p>
-      <Layout />
-          
-      </div>
-    </div>
-  );
+  return <Layout />;
 }
 
 export default App;

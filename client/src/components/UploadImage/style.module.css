@@ -1,22 +1,20 @@
 .container {
-
   border-radius: 10px;
   display: flex;
-  justify-content: space-between;
   font-size: 18px;
-  align-items: flex-start;
+  align-items: stretch;
   border: none;
+  object-fit: fill;
+  flex-direction: column;
 }
 
 .image {
-
-  border-radius: 10px;
   aspect-ratio: 3/2;
   object-fit: fill;
+  flex: 1;
 }
 
 .empty {
- 
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -24,15 +22,14 @@
   align-items: center;
   border: none;
   aspect-ratio: 3/2;
+  object-fit: fill;
+  flex: 1;
 }
 
 .close {
   border: none;
   background-color: transparent;
-  width: 30px;
-  height: 30px;
+  padding-right: 0.5rem;
   font-size: 20px;
-}
-
-@media screen and (max-width: 430px) {
+  text-align: start;
 }

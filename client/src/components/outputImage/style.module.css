@@ -1,0 +1,5 @@
+.OutputImage {
+  aspect-ratio: 3/2;
+  display: flex;
+  height: 40vh;
+}
