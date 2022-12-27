@@ -1,10 +1,18 @@
 import React, { useRef, useState } from "react";
 import style from "./style.module.css";
 import Select from "../select/index";
-const UploadImage = () => {
+import axios from "../../globals/api/axios";
+
+const UploadImage = ({ type }) => {
+  // fetch files from the context
+
   const inputFileRef = useRef(null);
   const [file, setFile] = useState();
   const [isUploaded, setIsUploaded] = useState(false);
+
+  //////////////////////////////////////////////////////
+  //Method
+
   // force input clicking
   const handle_button_click = () => {
     inputFileRef.current.click();
@@ -17,12 +25,24 @@ const UploadImage = () => {
       setFile(URL.createObjectURL(inputFile));
       setIsUploaded(true);
       console.log(inputFile);
+      upload_image(inputFile);
     }
   };
+
   const close_image = async (e) => {
     setIsUploaded(false);
     inputFileRef.current.value = null;
     setFile(null);
+  };
+
+  const upload_image = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(file);
+    console.log(formData);
+    axios.post("/upload", formData).then((res) => {
+      console.log(res.data);
+    });
   };
 
   return (
@@ -38,7 +58,7 @@ const UploadImage = () => {
         <div>
           <Select
             img={<img src={file} alt="" className={style.image} />}
-            type={1}
+            type={type}
           />
         </div>
       ) : (

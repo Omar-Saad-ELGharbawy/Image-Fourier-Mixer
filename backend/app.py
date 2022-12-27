@@ -17,7 +17,7 @@ app.config['processedImgsFolder'] = processedImgsFolder
 
 CORS(app)
 
-ALLOWED_EXTENSIONS = {'png', 'jpeg'}   # Extension Allowed
+ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg'}   # Extension Allowed
 # ----------------------------------------------------------------------------------------------------------------------#
 
 
@@ -45,7 +45,7 @@ def allowed_file(filename):
 def upload_file():
     # check if the post request has the file part
     if "file" not in request.files:
-        return {"There is an error": 'err'}, 400
+        return {"There is an error": 'err'}, 401
 
     # get the file
     file = request.files["file"]

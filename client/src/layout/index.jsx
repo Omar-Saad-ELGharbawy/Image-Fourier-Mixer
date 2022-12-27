@@ -4,7 +4,7 @@ import UploadImage from "../components/UploadImage/index";
 const Layout = () => {
   return (
     <div>
-      <UploadImage />
+      <UploadImage type={1} />
     </div>
   );
 };
