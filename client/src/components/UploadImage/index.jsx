@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import style from "./style.module.css";
+import Select from "../select/index";
 const UploadImage = () => {
   const inputFileRef = useRef(null);
   const [file, setFile] = useState();
@@ -20,20 +21,28 @@ const UploadImage = () => {
   };
   const close_image = async (e) => {
     setIsUploaded(false);
+    inputFileRef.current.value = null;
     setFile(null);
   };
 
   return (
-    <div>
+    <div className={style.container}>
+      <button
+        className={style.close}
+        onClick={close_image}
+        style={{ visibility: isUploaded ? "visible" : "hidden" }}
+      >
+        x
+      </button>
       {isUploaded ? (
         <div>
-          <button className={style.close} onClick={close_image}>
-            x
-          </button>
-          <img src={file} alt="" className={style.container} />
+          <Select
+            img={<img src={file} alt="" className={style.image} />}
+            type={1}
+          />
         </div>
       ) : (
-        <button className={style.container} onClick={handle_button_click}>
+        <button className={style.empty} onClick={handle_button_click}>
           <p>Upload an image</p>
         </button>
       )}
