@@ -1,17 +1,16 @@
 import React, { useRef, useState } from "react";
-import "./style.css";
-
+import style from "./style.module.css";
 const UploadImage = () => {
   const inputFileRef = useRef(null);
   const [file, setFile] = useState();
   const [isUploaded, setIsUploaded] = useState(false);
   // force input clicking
-  const handleButtonClick = () => {
+  const handle_button_click = () => {
     inputFileRef.current.click();
   };
 
   // handle on upload file
-  const handleFileUpload = async (e) => {
+  const handle_file_upload = async (e) => {
     let inputFile = e.target.files[0];
     if (inputFile) {
       setFile(URL.createObjectURL(inputFile));
@@ -19,22 +18,25 @@ const UploadImage = () => {
       console.log(inputFile);
     }
   };
+  const close_image = async (e) => {
+    setIsUploaded(false);
+    setFile(null);
+  };
 
   return (
-    <div className="upload-audio">
-      <button onClick={handleButtonClick} style={{ width: "300px", height: "300px", backgroundColor: "#fd5c63" , border:"none", borderRadius:"15px"}}>
-        {isUploaded ? (
-          <img src={file} alt="" style={{ width: "300px", height: "300px", borderRadius:"15px" }} />
-        ) : (
-          <div
-            // style={{ width: "300px", height: "300px", backgroundColor: "#E9967A" , border:"none", borderRadius:"10px", display:"flex", alignContent:"center", alignItems:"center"}}
-          >
-            <div style={{ color:"white", position:"relative", left:"0%", fontSize:"20px"}}>
-            Upload an image
-            </div>
-          </div>
-        )}
-      </button>
+    <div>
+      {isUploaded ? (
+        <div>
+          <button className={style.close} onClick={close_image}>
+            x
+          </button>
+          <img src={file} alt="" className={style.container} />
+        </div>
+      ) : (
+        <button className={style.container} onClick={handle_button_click}>
+          <p>Upload an image</p>
+        </button>
+      )}
 
       <input
         type="file"
@@ -42,7 +44,7 @@ const UploadImage = () => {
         id="file"
         ref={inputFileRef}
         style={{ display: "none" }}
-        onChange={handleFileUpload}
+        onChange={handle_file_upload}
       />
     </div>
   );
