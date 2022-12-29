@@ -50,7 +50,7 @@ const UploadImage = ({ type }) => {
       <button
         className={style.close}
         onClick={close_image}
-        style={{ visibility: !isUploaded ? "visible" : "hidden" }}
+        style={{ visibility: isUploaded ? "visible" : "hidden" }}
       >
         x
       </button>
