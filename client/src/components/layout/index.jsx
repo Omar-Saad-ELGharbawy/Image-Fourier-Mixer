@@ -10,7 +10,6 @@ import OutputImage from "../outputImage/outputImage";
 const Layout = () => {
   return (
     <Container fluid className={style.container}>
-      <Row>Images Mixer</Row>
       <Row>
         <Col xs={6} sm={6} md={6} lg={6}>
           <Row>
