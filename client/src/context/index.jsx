@@ -12,15 +12,15 @@ export const FileContextProvider = ({ children }) => {
   const [img2, setImg2] = useState(defualtImage);
   const [dimensions1, setDimensions1] = useState({
     unit: "%",
-    width: 100,
-    height: 100,
+    width: 0,
+    height: 0,
     x: 0,
     y: 0,
   });
   const [dimensions2, setDimensions2] = useState({
     unit: "%",
-    width: 100,
-    height: 100,
+    width: 0,
+    height: 0,
     x: 0,
     y: 0,
   });
