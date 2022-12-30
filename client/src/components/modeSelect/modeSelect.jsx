@@ -1,12 +1,16 @@
 import { Col, Row } from "react-bootstrap";
 import Image from "../image/index";
+import { defualtImage } from "../../globals/constants/constants";
+
 import { AppContext } from "../../context/index";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import style from "./style.module.css";
 import axios from "../../globals/api/axios";
 
 const ModeSelect = ({ type }) => {
   const {
+    status,
+    setStatus,
     mag1,
     mag2,
     phase1,
@@ -56,30 +60,40 @@ const ModeSelect = ({ type }) => {
         }
       }
     }
+    setStatus(true);
 
+    // send_request();
+  };
+
+  const send_request = () => {
+    setMixedImage(defualtImage);
+    const data = {
+      phase_1_selected: isSelectedPhase1,
+      phase_2_selected: isSelectedPhase2,
+      mag_1_selected: isSelectedMag1,
+      mag_2_selected: isSelectedMag2,
+    };
     console.log(
       isSelectedMag1,
       isSelectedMag2,
       isSelectedPhase1,
       isSelectedPhase2
     );
-    console.log(type, isMag);
-    send_request();
-  };
 
-  const send_request = () => {
-    axios
-      .post("/update", {
-        phase_1_selected: isSelectedPhase1,
-        phase_2_selected: isSelectedPhase2,
-        mag_1_selected: isSelectedMag1,
-        mag_2_selected: isSelectedMag2,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setMixedImage(res.data.mixed_img);
-      });
+    axios.post("/update", data).then((res) => {
+      console.log(res.data);
+
+      axios.get(res.data.mixed_img);
+      setMixedImage(res.data.mixed_img);
+    });
+    setStatus(false);
   };
+  useEffect(() => {
+    if (status) {
+      console.log("sending request");
+      send_request();
+    }
+  }, [status]);
 
   return (
     <Col>

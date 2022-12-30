@@ -7,7 +7,7 @@ export const FileContextProvider = ({ children }) => {
   const [value, setValue] = useState(0);
 
   // App Data
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(false);
   const [img1, setImg1] = useState(defualtImage);
   const [img2, setImg2] = useState(defualtImage);
   const [dimensions1, setDimensions1] = useState({

@@ -6,17 +6,17 @@
   border: none;
   object-fit: fill;
   flex-direction: column;
-  
 }
 
 .image {
   aspect-ratio: 3/2;
   object-fit: fill;
   flex: 1;
+  border-radius: 15px;
+  box-shadow: rgb(27 33 138 / 42%) 0px 3px 8px;
 }
 
 .empty {
-
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -29,33 +29,33 @@
   box-shadow: rgb(27 33 138 / 42%) 0px 3px 8px;
 }
 
-
 .close {
-   margin: 0;
-	 border: 0;
-	 padding: 0;
-	 background: #132659;
-	 border-radius: 50%;
-	 width: 35px;
-	 height: 35px;
-	 display: flex;
-	 flex-flow: column nowrap;
-	 justify-content: center;
-	 align-items: center;
-	 cursor: pointer;
-	 transition: all 150ms;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: #132659;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 150ms;
 }
 
-.close .icon{
+.close .icon {
   border: 0;
   padding-bottom: 15%;
   background: none;
   position: relative;
-  width: 23px;  
+  width: 23px;
 }
 
-.close .icon:before, .close .icon:after {
-  content: '';
+.close .icon:before,
+.close .icon:after {
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -73,7 +73,8 @@
 .close .icon span {
   display: block;
 }
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
   transform: rotateZ(90deg);
   background: #203f96;
 }
