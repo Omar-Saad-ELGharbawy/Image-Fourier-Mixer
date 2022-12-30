@@ -3,9 +3,9 @@ import style from "./style.module.css";
 import Select from "../select/index";
 import axios from "../../globals/api/axios";
 import { AppContext } from "../../context/index";
-const UploadImage = ({ type, img }) => {
+const UploadImage = ({ type }) => {
   // fetch files from the context
-  const { setimg1, setImg2 } = useContext(AppContext);
+  const { setImg1, setImg2, img1, img2 } = useContext(AppContext);
 
   const inputFileRef = useRef(null);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -23,7 +23,7 @@ const UploadImage = ({ type, img }) => {
     let inputFile = e.target.files[0];
     if (inputFile) {
       if (type === 1) {
-        setimg1(URL.createObjectURL(inputFile));
+        setImg1(URL.createObjectURL(inputFile));
       } else {
         setImg2(URL.createObjectURL(inputFile));
       }
@@ -37,7 +37,7 @@ const UploadImage = ({ type, img }) => {
     setIsUploaded(false);
     inputFileRef.current.value = null;
     if (type === 1) {
-      setimg1(null);
+      setImg1(null);
     } else {
       setImg2(null);
     }
@@ -65,7 +65,13 @@ const UploadImage = ({ type, img }) => {
       {isUploaded ? (
         <div>
           <Select
-            img={<img src={img} alt="" className={style.image} />}
+            img={
+              <img
+                src={type === 1 ? img1 : img2}
+                alt=""
+                className={style.image}
+              />
+            }
             type={type}
           />
         </div>

@@ -10,6 +10,20 @@ export const FileContextProvider = ({ children }) => {
   const [status, setStatus] = useState(0);
   const [img1, setImg1] = useState(defualtImage);
   const [img2, setImg2] = useState(defualtImage);
+  const [dimensions1, setDimensions1] = useState({
+    unit: "%",
+    width: 100,
+    height: 100,
+    x: 0,
+    y: 0,
+  });
+  const [dimensions2, setDimensions2] = useState({
+    unit: "%",
+    width: 100,
+    height: 100,
+    x: 0,
+    y: 0,
+  });
   const [mag1, setMag1] = useState(defualtImage);
   const [mag2, setMag2] = useState(defualtImage);
   const [phase1, setPhase1] = useState(defualtImage);
@@ -31,6 +45,10 @@ export const FileContextProvider = ({ children }) => {
         setImg1,
         img2,
         setImg2,
+        dimensions1,
+        setDimensions1,
+        dimensions2,
+        setDimensions2,
         mag1,
         setMag1,
         mag2,
