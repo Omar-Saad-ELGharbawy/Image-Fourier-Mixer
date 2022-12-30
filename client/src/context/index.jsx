@@ -8,13 +8,13 @@ export const FileContextProvider = ({ children }) => {
 
   // App Data
   const [status, setStatus] = useState(0);
-  const [img1, setImg1] = useState({ defualtImage });
-  const [img2, setImg2] = useState({ defualtImage });
-  const [mag1, setMag1] = useState({ defualtImage });
-  const [mag2, setMag2] = useState({ defualtImage });
-  const [phase1, setPhase1] = useState({ defualtImage });
-  const [phase2, setPhase2] = useState({ defualtImage });
-  const [mixedImage, setMixedImage] = useState({ defualtImage });
+  const [img1, setImg1] = useState(defualtImage);
+  const [img2, setImg2] = useState(defualtImage);
+  const [mag1, setMag1] = useState(defualtImage);
+  const [mag2, setMag2] = useState(defualtImage);
+  const [phase1, setPhase1] = useState(defualtImage);
+  const [phase2, setPhase2] = useState(defualtImage);
+  const [mixedImage, setMixedImage] = useState(defualtImage);
   const [isSelectedPhase1, selectPhase1] = useState(false);
   const [isSelectedPhase2, selectPhase2] = useState(false);
   const [isSelectedMag1, selectMag1] = useState(false);

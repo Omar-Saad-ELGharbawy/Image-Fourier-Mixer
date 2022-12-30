@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import style from "./style.module.css";
 import Select from "../select/index";
 import axios from "../../globals/api/axios";
-
-const UploadImage = ({ type }) => {
+import { AppContext } from "../../context/index";
+const UploadImage = ({ type, img }) => {
   // fetch files from the context
+  const { setimg1, setImg2 } = useContext(AppContext);
 
   const inputFileRef = useRef(null);
-  const [file, setFile] = useState();
   const [isUploaded, setIsUploaded] = useState(false);
 
   //////////////////////////////////////////////////////
@@ -22,7 +22,11 @@ const UploadImage = ({ type }) => {
   const handle_file_upload = async (e) => {
     let inputFile = e.target.files[0];
     if (inputFile) {
-      setFile(URL.createObjectURL(inputFile));
+      if (type === 1) {
+        setimg1(URL.createObjectURL(inputFile));
+      } else {
+        setImg2(URL.createObjectURL(inputFile));
+      }
       setIsUploaded(true);
       console.log(inputFile);
       upload_image(inputFile);
@@ -32,7 +36,11 @@ const UploadImage = ({ type }) => {
   const close_image = async (e) => {
     setIsUploaded(false);
     inputFileRef.current.value = null;
-    setFile(null);
+    if (type === 1) {
+      setimg1(null);
+    } else {
+      setImg2(null);
+    }
   };
 
   const upload_image = async (file) => {
@@ -57,7 +65,7 @@ const UploadImage = ({ type }) => {
       {isUploaded ? (
         <div>
           <Select
-            img={<img src={file} alt="" className={style.image} />}
+            img={<img src={img} alt="" className={style.image} />}
             type={type}
           />
         </div>

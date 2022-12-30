@@ -29,6 +29,7 @@
 .close {
   border: none;
   background-color: transparent;
+  color: red;
   padding-right: 0.5rem;
   font-size: 20px;
   text-align: start;
