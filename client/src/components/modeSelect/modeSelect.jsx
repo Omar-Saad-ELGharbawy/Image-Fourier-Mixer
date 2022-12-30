@@ -20,19 +20,40 @@ const ModeSelect = ({ type }) => {
   } = useContext(AppContext);
 
   const on_click = (isMag) => {
-    if (isMag) {
-      if (type === 1) {
+    if (type === 1) {
+      if (isMag) {
         selectMag1(!isSelectedMag1);
+        selectPhase1(false);
+        if (isSelectedMag2) {
+          selectMag2(false);
+          selectPhase2(true);
+        }
       } else {
-        selectMag2(!isSelectedMag2);
+        selectPhase1(!isSelectedPhase1);
+        selectMag1(false);
+        if (isSelectedPhase2) {
+          selectPhase2(false);
+          selectMag2(true);
+        }
       }
     } else {
-      if (type === 1) {
-        selectPhase1(!isSelectedPhase1);
+      if (isMag) {
+        selectMag2(!isSelectedMag2);
+        selectPhase2(false);
+        if (isSelectedMag1) {
+          selectMag1(false);
+          selectPhase1(true);
+        }
       } else {
         selectPhase2(!isSelectedPhase2);
+        selectMag2(false);
+        if (isSelectedPhase1) {
+          selectPhase1(false);
+          selectMag1(true);
+        }
       }
     }
+
     console.log(
       isSelectedMag1,
       isSelectedMag2,
@@ -41,6 +62,7 @@ const ModeSelect = ({ type }) => {
     );
     console.log(type, isMag);
   };
+
   return (
     <Col>
       <Row
