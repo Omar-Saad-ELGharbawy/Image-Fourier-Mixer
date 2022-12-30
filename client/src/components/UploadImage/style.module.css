@@ -17,6 +17,7 @@
 }
 
 .empty {
+  background-color: #13265921;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -29,8 +30,38 @@
   box-shadow: rgb(27 33 138 / 42%) 0px 3px 8px;
 }
 
+.empty:hover {
+  background-color: #13265933;
+}
+
+article {
+  background: linear-gradient(
+    to right,
+    hsl(195deg 83% 40%),
+    hsl(224deg 65% 21%)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+p {
+  font-size: 4vmin;
+  line-height: 1.2;
+  font-family: Copperplate;
+}
+
+article:hover {
+  background: linear-gradient(
+    to right,
+    hsl(224deg 65% 21%),
+    hsl(191deg 79% 46%)
+  );
+  -webkit-background-clip: text;
+}
+
 .close {
-  margin: 0;
+  margin-left: auto;
   border: 0;
   padding: 0;
   background: #132659;
