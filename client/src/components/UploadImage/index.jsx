@@ -102,7 +102,9 @@ const UploadImage = ({ type }) => {
         </div>
       ) : (
         <button className={style.empty} onClick={handle_button_click}>
+        <article>
           <p>Upload an image</p>
+        </article>  
         </button>
       )}
 
