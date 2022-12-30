@@ -99,12 +99,6 @@ def update():
     # get request data
     data = request.get_json()
 
-    # get the dimensions
-    # dimensions = data["dimensions"]
-    # phase_1_selected: isSelectedPhase1,
-    # phase_2_selected: isSelectedPhase2,
-    # mag_1_selected: isSelectedMag1,
-    # mag_2_selected: isSelectedMag2,
     phase1 = data["phase_1_selected"]
     phase2 = data["phase_2_selected"]
     mag1 = data["mag_1_selected"]
@@ -129,6 +123,28 @@ def update():
     elif (mag2 and phase1):
         Processing.save_mixed_image(
             Processing.img2.mag, Processing.img1.phase)
+
+    return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
+# ----------------------------------------------------------------------------------------------------------------------#
+
+
+# ----------------------------------------------------------------------------------------------------------------------#
+# API description:
+#       Fuction: Upload the file to the server
+#       Return: File URL
+
+
+@ app.route("/api/crop", methods=['POST'])
+def crop():
+
+    # get request data
+    data = request.get_json()
+
+    # get the dimensions
+    dimensions = data["dimensions"]
+    type = data["type"]  # 1 or 2
+
+    print(dimensions, type)
 
     return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
 # ----------------------------------------------------------------------------------------------------------------------#

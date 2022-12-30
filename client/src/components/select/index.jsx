@@ -12,7 +12,7 @@ const Select = ({ img, type }) => {
 
   // Methods
   const on_change = (perc) => {
-    axios.post("/update", { dimensions: perc }).then((res) => {
+    axios.post("/crop", { dimensions: perc, type: type }).then((res) => {
       console.log(res.data);
     });
   };
