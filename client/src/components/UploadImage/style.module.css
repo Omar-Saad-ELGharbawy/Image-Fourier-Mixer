@@ -6,6 +6,7 @@
   border: none;
   object-fit: fill;
   flex-direction: column;
+  
 }
 
 .image {
@@ -15,6 +16,7 @@
 }
 
 .empty {
+
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -24,14 +26,54 @@
   aspect-ratio: 3/2;
   object-fit: fill;
   flex: 1;
+  box-shadow: rgb(27 33 138 / 42%) 0px 3px 8px;
 }
 
+
 .close {
-  border: none;
-  background-color: transparent;
-  color: red;
-  padding-right: 0.5rem;
-  font-size: 20px;
-  text-align: start;
-  width: 2rem;
+   margin: 0;
+	 border: 0;
+	 padding: 0;
+	 background: #132659;
+	 border-radius: 50%;
+	 width: 35px;
+	 height: 35px;
+	 display: flex;
+	 flex-flow: column nowrap;
+	 justify-content: center;
+	 align-items: center;
+	 cursor: pointer;
+	 transition: all 150ms;
+}
+
+.close .icon{
+  border: 0;
+  padding-bottom: 15%;
+  background: none;
+  position: relative;
+  width: 23px;  
+}
+
+.close .icon:before, .close .icon:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #fff;
+  border-radius: 6px;
+}
+
+.close .icon:before {
+  transform: rotate(45deg);
+}
+.close .icon:after {
+  transform: rotate(-45deg);
+}
+.close .icon span {
+  display: block;
+}
+.close:hover, .close:focus {
+  transform: rotateZ(90deg);
+  background: #203f96;
 }
