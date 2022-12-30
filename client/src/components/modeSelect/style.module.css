@@ -1,0 +1,15 @@
+.selected {
+  margin: 10px;
+  border: 2px red solid;
+}
+.unselected {
+  margin: 10px;
+  border: none;
+  transform: scale(0.8);
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  padding: 0.5rem;
+}
