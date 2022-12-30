@@ -3,6 +3,8 @@ import Image from "../image/index";
 import { AppContext } from "../../context/index";
 import React, { useContext } from "react";
 import style from "./style.module.css";
+import axios from "../../globals/api/axios";
+
 const ModeSelect = ({ type }) => {
   const {
     mag1,
@@ -17,6 +19,7 @@ const ModeSelect = ({ type }) => {
     selectMag1,
     isSelectedMag2,
     selectMag2,
+    setMixedImage,
   } = useContext(AppContext);
 
   const on_click = (isMag) => {
@@ -61,6 +64,21 @@ const ModeSelect = ({ type }) => {
       isSelectedPhase2
     );
     console.log(type, isMag);
+    send_request();
+  };
+
+  const send_request = () => {
+    axios
+      .post("/update", {
+        phase_1_selected: isSelectedPhase1,
+        phase_2_selected: isSelectedPhase2,
+        mag_1_selected: isSelectedMag1,
+        mag_2_selected: isSelectedMag2,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMixedImage(res.data.mixed_img);
+      });
   };
 
   return (

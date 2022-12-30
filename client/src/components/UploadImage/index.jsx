@@ -3,9 +3,20 @@ import style from "./style.module.css";
 import Select from "../select/index";
 import axios from "../../globals/api/axios";
 import { AppContext } from "../../context/index";
+import { defualtImage } from "../../globals/constants/constants";
+
 const UploadImage = ({ type }) => {
   // fetch files from the context
-  const { setImg1, setImg2, img1, img2 } = useContext(AppContext);
+  const {
+    setImg1,
+    setImg2,
+    img1,
+    img2,
+    setMag1,
+    setMag2,
+    setPhase1,
+    setPhase2,
+  } = useContext(AppContext);
 
   const inputFileRef = useRef(null);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -37,19 +48,33 @@ const UploadImage = ({ type }) => {
     setIsUploaded(false);
     inputFileRef.current.value = null;
     if (type === 1) {
-      setImg1(null);
+      setImg1(defualtImage);
+      setMag1(defualtImage);
+      setPhase1(defualtImage);
     } else {
-      setImg2(null);
+      setImg2(defualtImage);
+      setMag2(defualtImage);
+      setPhase2(defualtImage);
     }
   };
 
   const upload_image = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("type", type);
     console.log(file);
     console.log(formData);
     axios.post("/upload", formData).then((res) => {
       console.log(res.data);
+      if (type === 1) {
+        setImg1(res.data.img_url);
+        setMag1(res.data.mag_url);
+        setPhase1(res.data.phase_url);
+      } else {
+        setImg2(res.data.img_url);
+        setMag2(res.data.mag_url);
+        setPhase2(res.data.phase_url);
+      }
     });
   };
 
@@ -60,8 +85,7 @@ const UploadImage = ({ type }) => {
         onClick={close_image}
         style={{ visibility: isUploaded ? "visible" : "hidden" }}
       >
-      <span className={style.icon}></span>
-
+        <span className={style.icon}></span>
       </button>
       {isUploaded ? (
         <div>

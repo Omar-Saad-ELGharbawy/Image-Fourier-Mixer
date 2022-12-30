@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.fft import irfft2
+from scipy.fft import ifft2, ifftshift
 from matplotlib import pyplot as plt
 from image import Image
 
@@ -28,8 +28,12 @@ class Processing:
 
     @staticmethod
     def save_mixed_image(mag, phase):
-        mixed_image_data = np.multiply(mag, phase)
-        mixed_image = irfft2(mixed_image_data)
-        mixed_image_abs = np.abs(irfft2(mixed_image_data))
+        mixed_image = ifftshift(np.multiply(
+            mag, np.exp(np.multiply(1j, phase))))
+        mixed_image = ifft2(mixed_image)
+        # mixed_image_data = np.multiply(mag, phase)
+        # mixed_image = irfft2(mixed_image_data)
+        # mixed_image_abs = np.abs(irfft2(mixed_image_data))
+
         plt.imsave(f".\\storage\\processed\mixed_img.png",
-                   mixed_image, cmap='gray')
+                   mixed_image.real, cmap='gray')

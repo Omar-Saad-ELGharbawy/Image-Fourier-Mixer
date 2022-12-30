@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
 from scipy.fftpack import ifftshift
-
 import cv2
 from matplotlib import pyplot as plt
 
@@ -15,8 +14,8 @@ class Image:
     dimensions = {}
 
     def __init__(self):
-        self.fftangle = 0
-        self.fftmag = 1
+        self.phase = 0
+        self.mag = 1
 
     def read(self, image_path):
         self.image_path = image_path
@@ -27,14 +26,17 @@ class Image:
     def calculate_magnitude_and_phase(self):
         fftdata = fft2(self.image)
         fftdata = fftshift(fftdata)
-        self.fftmag = np.abs(fftdata)
-        self.fftangle = np.angle(fftdata)
+        self.mag = np.abs(fftdata)
+        self.phase = np.angle(fftdata)
 
     def save(self, name):
-        img_mag = ifftshift(np.multiply(self.fftmag, 1))
+        img_mag = ifftshift(np.multiply(self.mag, 1))
         img_mag = ifft2(img_mag)
-        img_phase = ifftshift(1 * np.exp(np.multiply(1j, self.fftangle)))
+        img_phase = ifftshift(1 * np.exp(np.multiply(1j, self.phase)))
         img_phase = ifft2(img_phase)
+
+        # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
+        # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
 
         self.image_path = f".\\storage\\processed\\{name}.png"
         self.image_mag_path = f".\\storage\\processed\\{name}_mag.png"

@@ -10,14 +10,14 @@ from image import Image
 # Configurations
 app = Flask(__name__)
 
-originalImgsFolder = '.\\storage\\original'
-processedImgsFolder = '.\\storage\\processed'
+originalImgsFolder = '.\\storage\\original\\'
+processedImgsFolder = '.\\storage\\processed\\'
 
 app.config['originalImgsFolder'] = originalImgsFolder
 app.config['processedImgsFolder'] = processedImgsFolder
 
-originalImagePath = "http://127.0.0.1:5000/api/original/file/"
-processedImagePath = "http://127.0.0.1:5000/api/processed/file/"
+originalImagePath = "http://127.0.0.1:5000/api/file/original/"
+processedImagePath = "http://127.0.0.1:5000/api/file/processed/"
 
 CORS(app)
 
@@ -39,7 +39,8 @@ def allowed_file(filename):
 
 # -------------------------------------------------------- Methods -----------------------------------------------------#
 def get_image_name(file):
-    return file.name.split('.')[0]
+
+    return file.filename.split('.')[0]
 
 # ----------------------------------------------------------------------------------------------------------------------#
 
@@ -51,8 +52,7 @@ def get_image_name(file):
 
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
-    # print(request.files["file"])
-    # print(request.get_json()['type'])
+
     # check if the post request has the file part
     if "file" not in request.files:
         return {"There is an error": 'err'}, 401
@@ -60,8 +60,10 @@ def upload_file():
     # get the file
     file = request.files["file"]
 
-    # get request data
-    data = request.get_json()
+    if "type" not in request.form:
+        return {"There is an error": 'err'}, 401
+
+    data = request.form
 
     # check file extension
     if not allowed_file(file.filename):
@@ -72,17 +74,17 @@ def upload_file():
     file.save(img_path)
     img_url = originalImgsFolder + file.filename
 
-    # img = Image()
-    # img.read(img_url)
-    # img.calculate_magnitude_and_phase()
-    # img.save(get_image_name(file))
+    img = Image()
+    img.read(img_url)
+    img.calculate_magnitude_and_phase()
+    img.save(get_image_name(file))
 
-    # if (data["type"] == 1):
-    #     Processing().img1 = img
-    # elif (data["type"] == 2):
-    #     Processing().img2 = img
+    if (data["type"] == "1"):
+        Processing.img1 = img
+    elif (data["type"] == "2"):
+        Processing.img2 = img
 
-    return {"img_url": processedImagePath+get_image_name(file), "mag_url": processedImagePath+get_image_name(file)+"_mag", "phase_url": processedImagePath+get_image_name(file)+"_phase"}, 200
+    return {"img_url": processedImagePath+get_image_name(file)+'.png', "mag_url": processedImagePath+get_image_name(file)+"_mag.png", "phase_url": processedImagePath+get_image_name(file)+"_phase.png"}, 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 # ----------------------------------------------------------------------------------------------------------------------#
@@ -91,16 +93,44 @@ def upload_file():
 #       Return: File URL
 
 
-@app.route("/api/update", methods=['POST'])
+@ app.route("/api/update", methods=['POST'])
 def update():
 
     # get request data
     data = request.get_json()
 
     # get the dimensions
-    dimensions = data["dimensions"]
+    # dimensions = data["dimensions"]
+    # phase_1_selected: isSelectedPhase1,
+    # phase_2_selected: isSelectedPhase2,
+    # mag_1_selected: isSelectedMag1,
+    # mag_2_selected: isSelectedMag2,
+    phase1 = data["phase_1_selected"]
+    phase2 = data["phase_2_selected"]
+    mag1 = data["mag_1_selected"]
+    mag2 = data["mag_2_selected"]
 
-    return {"dimensions": dimensions}, 200
+    # print(phase1, phase2, mag1, mag2)
+    if (phase1 and not mag2):
+        Processing.save_mixed_image(
+            1, Processing.img1.phase)
+    elif (phase2 and not mag1):
+        Processing.save_mixed_image(
+            1, Processing.img2.phase)
+    elif (mag1 and not phase2):
+        Processing.save_mixed_image(
+            Processing.img1.mag, 0)
+    elif (mag2 and not phase1):
+        Processing.save_mixed_image(
+            Processing.img2.mag, 0)
+    elif (mag1 and phase2):
+        Processing.save_mixed_image(
+            Processing.img1.mag, Processing.img2.phase)
+    elif (mag2 and phase1):
+        Processing.save_mixed_image(
+            Processing.img2.mag, Processing.img1.phase)
+
+    return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 
@@ -108,7 +138,7 @@ def update():
 # API description:
 #       Fuction: Download the file from the server
 #       Return: File
-@app.route('/api/file/<proccessed>/<file_name>', methods=['GET'])
+@ app.route('/api/file/<proccessed>/<file_name>', methods=['GET'])
 def file(file_name, proccessed):
     if request.method == 'GET':
         if proccessed == 'original':
