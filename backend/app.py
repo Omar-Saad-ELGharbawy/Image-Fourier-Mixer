@@ -39,7 +39,6 @@ def allowed_file(filename):
 
 # -------------------------------------------------------- Methods -----------------------------------------------------#
 def get_image_name(file):
-
     return file.filename.split('.')[0]
 
 # ----------------------------------------------------------------------------------------------------------------------#
@@ -48,7 +47,6 @@ def get_image_name(file):
 # API description:
 #       Fuction: Upload the file to the server
 #       Return: File URL
-
 
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
@@ -75,9 +73,9 @@ def upload_file():
     img_url = originalImgsFolder + file.filename
 
     img = Image()
-    img.read(img_url)
+    img.read(img_url,get_image_name(file))
     img.calculate_magnitude_and_phase()
-    img.save(get_image_name(file))
+    img.save()
 
     if (data["type"] == "1"):
         Processing.img1 = img
@@ -92,37 +90,53 @@ def upload_file():
 #       Fuction: Upload the file to the server
 #       Return: File URL
 
-
 @ app.route("/api/update", methods=['POST'])
 def update():
 
     # get request data
     data = request.get_json()
 
-    phase1 = data["phase_1_selected"]
-    phase2 = data["phase_2_selected"]
-    mag1 = data["mag_1_selected"]
-    mag2 = data["mag_2_selected"]
+    # # get the dimensions
+    # dimensions = data["dimensions"]
+    # type = data["type"]  # 1 or 2
+    # print(dimensions, type)
 
-    # print(phase1, phase2, mag1, mag2)
-    if (phase1 and not mag2):
-        Processing.save_mixed_image(
-            1, Processing.img1.phase)
-    elif (phase2 and not mag1):
-        Processing.save_mixed_image(
-            1, Processing.img2.phase)
-    elif (mag1 and not phase2):
-        Processing.save_mixed_image(
-            Processing.img1.mag, 0)
-    elif (mag2 and not phase1):
-        Processing.save_mixed_image(
-            Processing.img2.mag, 0)
-    elif (mag1 and phase2):
-        Processing.save_mixed_image(
-            Processing.img1.mag, Processing.img2.phase)
-    elif (mag2 and phase1):
-        Processing.save_mixed_image(
-            Processing.img2.mag, Processing.img1.phase)
+    # if (data["type"] == 1):
+    #     print("Cropping in 1")
+    #     Processing.img1.crop_mag_and_phase(**dimensions)
+    #     Processing.img1.save()
+
+    # elif (data["type"] == 2):
+    #     print("Cropping in 2")
+    #     Processing.img2.crop_mag_and_phase(**dimensions)
+    #     Processing.img2.save()
+
+    Processing.phase1 = data["phase_1_selected"]
+    Processing.phase2 = data["phase_2_selected"]
+    Processing.mag1 = data["mag_1_selected"]
+    Processing.mag2 = data["mag_2_selected"]
+
+    print(Processing.phase1, Processing.phase2, Processing.mag1, Processing.mag2)
+
+    Processing.select_and_save_mixed_img()
+    # if (phase1 and not mag2):
+    #     Processing.save_mixed_image(
+    #         1, Processing.img1.phase)
+    # elif (phase2 and not mag1):
+    #     Processing.save_mixed_image(
+    #         1, Processing.img2.phase)
+    # elif (mag1 and not phase2):
+    #     Processing.save_mixed_image(
+    #         Processing.img1.mag, 0)
+    # elif (mag2 and not phase1):
+    #     Processing.save_mixed_image(
+    #         Processing.img2.mag, 0)
+    # elif (mag1 and phase2):
+    #     Processing.save_mixed_image(
+    #         Processing.img1.mag, Processing.img2.phase)
+    # elif (mag2 and phase1):
+    #     Processing.save_mixed_image(
+    #         Processing.img2.mag, Processing.img1.phase)
 
     return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
 # ----------------------------------------------------------------------------------------------------------------------#
@@ -146,6 +160,8 @@ def crop():
     if (data["type"] == 1):
         print("Cropping in 1")
         Processing.img1.crop_mag_and_phase(**dimensions)
+        Processing.img1.save()
+        name = Processing.img1.name
         # print(Processing.img1.phase)
         # cropped_phase_1 = Processing.crop_2d_img(Processing.img1.phase,**dimensions)
         # cropped_mag_1 = Processing.crop_2d_img(Processing.img1.mag,**dimensions)
@@ -153,9 +169,12 @@ def crop():
         # cropped_phase_2 = Processing.crop_2d_img(Processing.img2.phase,**dimensions)
         # cropped_mag_2 = Processing.crop_2d_img(Processing.img2.mag,**dimensions)
         Processing.img2.crop_mag_and_phase(**dimensions)
+        Processing.img2.save()
+        name = Processing.img2.name
 
+    Processing.select_and_save_mixed_img()
     # update()
-    Processing.save_mixed_image(Processing.img1.phase,Processing.img2.mag)
+    # Processing.save_mixed_image(Processing.img1.phase,Processing.img2.mag)
 
     # phase1 = data["phase_1_selected"]
     # phase2 = data["phase_2_selected"]
@@ -183,7 +202,7 @@ def crop():
     #         Processing.img2.mag, Processing.img1.phase)
     
 
-    return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
+    return {"mixed_img": processedImagePath+'mixed_img.png' , "img_url": processedImagePath+name+'.png', "mag_url": processedImagePath+name+"_mag.png", "phase_url": processedImagePath+name+"_phase.png"}, 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 

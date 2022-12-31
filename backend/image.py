@@ -5,8 +5,8 @@ import cv2
 from matplotlib import pyplot as plt
 
 class Image:
-    width = 900
-    height = 600
+    width = 300
+    height = 200
     image_path = ""
     image_mag_path = ""
     image_phase_path = ""
@@ -17,10 +17,11 @@ class Image:
         # self.phase = 0
         # self.mag = 1
 
-    def read(self, image_path):
+    def read(self, image_path , name):
+        self.name= name
         self.image_path = image_path
         self.image = cv2.imread(self.image_path, 0)
-        if (self.image.shape[0] != self.width) & (self.image.shape[1] != self.height):
+        if (self.image.shape[1] != self.width) & (self.image.shape[0] != self.height):
             self.image = cv2.resize(self.image, (self.width, self.height))
 
     def calculate_magnitude_and_phase(self):
@@ -31,16 +32,16 @@ class Image:
         self.original_mag = self.mag
         self.original_phase = self.phase
 
-    def save(self, name):
+    def save( self ):
         img_mag = ifftshift(np.multiply(self.mag, 1))
         img_mag = ifft2(img_mag)
-        img_phase = ifftshift(1 * np.exp(np.multiply(1j, self.phase)))
+        img_phase = ifftshift(100 * np.exp(np.multiply(1j, self.phase)))
         img_phase = ifft2(img_phase)
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
-        self.image_path = f".\\storage\\processed\\{name}.png"
-        self.image_mag_path = f".\\storage\\processed\\{name}_mag.png"
-        self.image_phase_path = f".\\storage\\processed\\{name}_phase.png"
+        self.image_path = f".\\storage\\processed\\{self.name}.png"
+        self.image_mag_path = f".\\storage\\processed\\{self.name}_mag.png"
+        self.image_phase_path = f".\\storage\\processed\\{self.name}_phase.png"
         plt.imsave(self.image_path, self.image, cmap='gray')
         plt.imsave(self.image_mag_path, img_mag.real, cmap='gray')
         plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
@@ -60,4 +61,3 @@ class Image:
             for y in range(int(y1), int(y2)):
                 self.mag[self.height-1-y, x] = self.original_mag[self.height-1-y, x]
                 self.phase[self.height-1-y, x] = self.original_phase[self.height-1-y, x]
-        # return cutted_img
