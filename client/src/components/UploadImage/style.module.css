@@ -62,6 +62,9 @@ article:hover {
 
 .close {
   margin-left: auto;
+  margin-right: -15px;
+  margin-bottom: -7px;
+  z-index: 1;
   border: 0;
   padding: 0;
   background: #132659;
