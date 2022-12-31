@@ -4,7 +4,6 @@ from scipy.fftpack import ifftshift
 import cv2
 from matplotlib import pyplot as plt
 
-
 class Image:
     width = 900
     height = 600
@@ -14,8 +13,9 @@ class Image:
     dimensions = {}
 
     def __init__(self):
-        self.phase = 0
-        self.mag = 1
+        pass
+        # self.phase = 0
+        # self.mag = 1
 
     def read(self, image_path):
         self.image_path = image_path
@@ -28,20 +28,36 @@ class Image:
         fftdata = fftshift(fftdata)
         self.mag = np.abs(fftdata)
         self.phase = np.angle(fftdata)
+        self.original_mag = self.mag
+        self.original_phase = self.phase
 
     def save(self, name):
         img_mag = ifftshift(np.multiply(self.mag, 1))
         img_mag = ifft2(img_mag)
         img_phase = ifftshift(1 * np.exp(np.multiply(1j, self.phase)))
         img_phase = ifft2(img_phase)
-
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
-
         self.image_path = f".\\storage\\processed\\{name}.png"
         self.image_mag_path = f".\\storage\\processed\\{name}_mag.png"
         self.image_phase_path = f".\\storage\\processed\\{name}_phase.png"
-
         plt.imsave(self.image_path, self.image, cmap='gray')
         plt.imsave(self.image_mag_path, img_mag.real, cmap='gray')
         plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
+
+    def crop_mag_and_phase(self, **dimenions):
+        # max_height = self.image.shape[0]-1
+        x1 = dimenions["x"] * self.width / 100
+        x2 = x1 + (dimenions["width"] * self.width / 100)
+        y2 = (100 - dimenions["y"]) * self.height / 100
+        y1 = y2 - (dimenions["height"] * self.height / 100)
+    #     cutted_img = np.ones_like(image)
+    #     cutted_img = np.full_like(image,235)
+        self.mag = np.zeros_like(self.original_mag)
+        self.phase = np.zeros_like(self.original_phase)
+
+        for x in range(int(x1), int(x2)):
+            for y in range(int(y1), int(y2)):
+                self.mag[self.height-1-y, x] = self.original_mag[self.height-1-y, x]
+                self.phase[self.height-1-y, x] = self.original_phase[self.height-1-y, x]
+        # return cutted_img

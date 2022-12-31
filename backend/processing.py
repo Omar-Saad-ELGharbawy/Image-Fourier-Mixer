@@ -3,9 +3,7 @@ from scipy.fft import ifft2, ifftshift
 from matplotlib import pyplot as plt
 from image import Image
 
-
 class Processing:
-
     img1 = Image()
     img2 = Image()
     mixed_image_path = ""
@@ -36,4 +34,4 @@ class Processing:
         # mixed_image_abs = np.abs(irfft2(mixed_image_data))
 
         plt.imsave(f".\\storage\\processed\mixed_img.png",
-                   mixed_image.real, cmap='gray')
+                mixed_image.real, cmap='gray')

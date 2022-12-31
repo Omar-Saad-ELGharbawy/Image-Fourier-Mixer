@@ -139,12 +139,49 @@ def crop():
 
     # get request data
     data = request.get_json()
-
     # get the dimensions
     dimensions = data["dimensions"]
     type = data["type"]  # 1 or 2
-
     print(dimensions, type)
+    if (data["type"] == 1):
+        print("Cropping in 1")
+        Processing.img1.crop_mag_and_phase(**dimensions)
+        # print(Processing.img1.phase)
+        # cropped_phase_1 = Processing.crop_2d_img(Processing.img1.phase,**dimensions)
+        # cropped_mag_1 = Processing.crop_2d_img(Processing.img1.mag,**dimensions)
+    elif (data["type"] == 2):
+        # cropped_phase_2 = Processing.crop_2d_img(Processing.img2.phase,**dimensions)
+        # cropped_mag_2 = Processing.crop_2d_img(Processing.img2.mag,**dimensions)
+        Processing.img2.crop_mag_and_phase(**dimensions)
+
+    # update()
+    Processing.save_mixed_image(Processing.img1.phase,Processing.img2.mag)
+
+    # phase1 = data["phase_1_selected"]
+    # phase2 = data["phase_2_selected"]
+    # mag1 = data["mag_1_selected"]
+    # mag2 = data["mag_2_selected"]
+
+    # # print(phase1, phase2, mag1, mag2)
+    # if (phase1 and not mag2):
+    #     Processing.save_mixed_image(
+    #         1, Processing.img1.phase)
+    # elif (phase2 and not mag1):
+    #     Processing.save_mixed_image(
+    #         1, Processing.img2.phase)
+    # elif (mag1 and not phase2):
+    #     Processing.save_mixed_image(
+    #         Processing.img1.mag, 0)
+    # elif (mag2 and not phase1):
+    #     Processing.save_mixed_image(
+    #         Processing.img2.mag, 0)
+    # elif (mag1 and phase2):
+    #     Processing.save_mixed_image(
+    #         Processing.img1.mag, Processing.img2.phase)
+    # elif (mag2 and phase1):
+    #     Processing.save_mixed_image(
+    #         Processing.img2.mag, Processing.img1.phase)
+    
 
     return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
 # ----------------------------------------------------------------------------------------------------------------------#
