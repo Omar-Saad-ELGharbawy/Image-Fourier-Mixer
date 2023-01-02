@@ -83,7 +83,7 @@ def upload_file():
     elif (data["type"] == "2"):
         Processing.img2 = img
 
-    return {"img_url": processedImagePath+get_image_name(file)+'.png', "mag_url": processedImagePath+get_image_name(file)+"_mag.png", "phase_url": processedImagePath+get_image_name(file)+"_phase.png"}, 200
+    return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 # ----------------------------------------------------------------------------------------------------------------------#
@@ -108,7 +108,7 @@ def update():
 
     Processing.select_and_save_mixed_img()
 
-    return {"mixed_img": processedImagePath+'mixed_img.png'}, 200
+    return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 
@@ -116,8 +116,6 @@ def update():
 # API description:
 #       Fuction: Upload the file to the server
 #       Return: File URL
-
-
 @ app.route("/api/crop", methods=['POST'])
 def crop():
 
@@ -143,7 +141,33 @@ def crop():
 
     Processing.select_and_save_mixed_img()
 
-    return {"mixed_img": processedImagePath+'mixed_img.png', "img_url": processedImagePath+name+'.png', "mag_url": processedImagePath+name+"_mag.png", "phase_url": processedImagePath+name+"_phase.png"}, 200
+    return Processing.getPaths(), 200
+# ----------------------------------------------------------------------------------------------------------------------#
+
+# ----------------------------------------------------------------------------------------------------------------------#
+# API description:
+#       Fuction: Upload the file to the server
+#       Return: File URL
+
+
+@ app.route("/api/delete", methods=['POST'])
+def delete():
+
+    # get request data
+    data = request.get_json()
+
+    # get the dimensions
+    type = data["type"]  # 1 or 2
+
+    print(type)
+
+    if (data["type"] == 1):
+        Processing.img1 = Image()
+
+    elif (data["type"] == 2):
+        Processing.img2 = Image()
+
+    return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 
