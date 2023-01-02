@@ -159,7 +159,7 @@ def crop():
     if (data["type"] == 1):
         print("Cropping in 1")
         Processing.img1.crop_mag_and_phase(**dimensions)
-        Processing.img1.save()
+        # Processing.img1.save()
         name = Processing.img1.name
         # print(Processing.img1.phase)
         # cropped_phase_1 = Processing.crop_2d_img(Processing.img1.phase,**dimensions)
@@ -168,7 +168,7 @@ def crop():
         # cropped_phase_2 = Processing.crop_2d_img(Processing.img2.phase,**dimensions)
         # cropped_mag_2 = Processing.crop_2d_img(Processing.img2.mag,**dimensions)
         Processing.img2.crop_mag_and_phase(**dimensions)
-        Processing.img2.save()
+        # Processing.img2.save()
         name = Processing.img2.name
 
     Processing.select_and_save_mixed_img()

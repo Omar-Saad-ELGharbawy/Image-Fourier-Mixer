@@ -47,7 +47,7 @@ class Image:
         # plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
         plt.imsave(self.image_path, self.image, cmap='gray')
         plt.imsave(self.image_mag_path, np.log(self.mag), cmap='gray')
-        plt.imsave(self.image_phase_path, self.real, cmap='gray')
+        plt.imsave(self.image_phase_path, self.phase, cmap='gray')
 
     def crop_mag_and_phase(self, **dimenions):
         # max_height = self.image.shape[0]-1
