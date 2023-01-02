@@ -50,9 +50,9 @@ class Processing:
     def getPaths(self):
         return {
             "img1": self.img1.image_url,
-            "img2": self.img2.image_url,
             "mag1": self.img1.mag_url,
-            "mag2": self.img2.mag_url,
             "phase1": self.img1.phase_url,
+            "img2": self.img2.image_url,
+            "mag2": self.img2.mag_url,
             "phase2": self.img2.phase_url,
             "mixed_img": self.mixed_image_path}
