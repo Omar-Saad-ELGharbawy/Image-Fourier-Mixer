@@ -3,6 +3,11 @@ from scipy.fft import ifft2, ifftshift
 from matplotlib import pyplot as plt
 from image import Image
 import cv2
+from werkzeug.utils import secure_filename
+from datetime import datetime
+import os
+
+processedImagePath = "http://127.0.0.1:5000/api/file/processed/"
 
 
 class Processing:
@@ -16,14 +21,22 @@ class Processing:
     mag2 = False
 
     @staticmethod
-    def save_mixed_image(mag, phase):
+    def save_mixed_image(self, mag, phase):
         mixed_image = ifftshift(np.multiply(
             mag, np.exp(np.multiply(1j, phase))))
         mixed_image = ifft2(mixed_image)
         # mixed_image = cv2.equalizeHist(mixed_image.astype(np.uint8))
         # mixed_image = np.abs(mixed_image)
+        now = datetime.now() 
+        file_date =now.strftime("%m/%d/%Y, %H:%M:%S")+".wav"
+        file_date=secure_filename(file_date)
+
+        self.mixed_image_url = processedImagePath+"mixed_img"+file_date+".png"
+
+        self.mixed_image_path = f".\\storage\\processed\\mixed_img{file_date}.png"
+
         plt.imsave(f".\\storage\\processed\mixed_img.png",
-                   mixed_image.real, cmap='gray')
+                    mixed_image.real, cmap='gray')
 
     @staticmethod
     def select_and_save_mixed_img():
@@ -55,4 +68,4 @@ class Processing:
             "mag2": self.img2.mag_url,
             "phase1": self.img1.phase_url,
             "phase2": self.img2.phase_url,
-            "mixed_img": self.mixed_image_path}
+            "mixed_img": self.mixed_image_url}

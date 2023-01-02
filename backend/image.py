@@ -3,6 +3,9 @@ from scipy.fft import fft2, ifft2, fftshift, ifftshift
 from scipy.fftpack import ifftshift
 import cv2
 from matplotlib import pyplot as plt
+from werkzeug.utils import secure_filename
+from datetime import datetime
+import os
 
 processedImagePath = "http://127.0.0.1:5000/api/file/processed/"
 
@@ -10,18 +13,20 @@ processedImagePath = "http://127.0.0.1:5000/api/file/processed/"
 class Image:
     width = 300
     height = 200
-    image_path = ""
-    image_mag_path = ""
-    image_phase_path = ""
-    dimensions = {}
+    # image_path = ""
+    # image_mag_path = ""
+    # image_phase_path = ""
+    # dimensions = {}
+
+
 
     def __init__(self):
         self.image_url = ""
         self.mag_url = ""
         self.phase_url = ""
-        pass
-        # self.phase = 0
-        # self.mag = 1
+        # pass
+        self.phase = 0
+        self.mag = 1
 
     def read(self, image_path, name):
         self.name = name
@@ -45,13 +50,17 @@ class Image:
         # img_phase = ifft2(img_phase)
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
-        self.image_url = processedImagePath+"{self.name}.png"
-        self.mag_url = processedImagePath+"{self.name}_mag.png"
-        self.phase_url = processedImagePath+"{self.name}_phase.png"
+        now = datetime.now() 
+        file_date =now.strftime("%m/%d/%Y, %H:%M:%S")+".wav"
+        file_date=secure_filename(file_date)
 
-        self.image_path = f".\\storage\\processed\\{self.name}.png"
-        self.image_mag_path = f".\\storage\\processed\\{self.name}_mag.png"
-        self.image_phase_path = f".\\storage\\processed\\{self.name}_phase.png"
+        self.image_url = processedImagePath+"{self.name}"+file_date+".png"
+        self.mag_url = processedImagePath+"{self.name}"+file_date+"_mag.png"
+        self.phase_url = processedImagePath+"{self.name}"+file_date+"_phase.png"
+
+        self.image_path = f".\\storage\\processed\\{self.name+file_date}.png"
+        self.image_mag_path = f".\\storage\\processed\\{self.name+file_date}_mag.png"
+        self.image_phase_path = f".\\storage\\processed\\{self.name+file_date}_phase.png"
         # plt.imsave(self.image_path, self.image, cmap='gray')
         # plt.imsave(self.image_mag_path, img_mag.real, cmap='gray')
         # plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
@@ -72,7 +81,5 @@ class Image:
 
         for x in range(int(x1), int(x2)):
             for y in range(int(y1), int(y2)):
-                self.mag[self.height-1-y,
-                         x] = self.original_mag[self.height-1-y, x]
-                self.phase[self.height-1-y,
-                           x] = self.original_phase[self.height-1-y, x]
+                self.mag[self.height-1-y,x] = self.original_mag[self.height-1-y, x]
+                self.phase[self.height-1-y,x] = self.original_phase[self.height-1-y, x]
