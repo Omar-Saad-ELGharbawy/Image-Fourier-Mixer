@@ -4,6 +4,9 @@ from scipy.fftpack import ifftshift
 import cv2
 from matplotlib import pyplot as plt
 
+processedImagePath = "http://127.0.0.1:5000/api/file/processed/"
+
+
 class Image:
     width = 300
     height = 200
@@ -13,12 +16,15 @@ class Image:
     dimensions = {}
 
     def __init__(self):
+        self.image_url = ""
+        self.mag_url = ""
+        self.phase_url = ""
         pass
         # self.phase = 0
         # self.mag = 1
 
-    def read(self, image_path , name):
-        self.name= name
+    def read(self, image_path, name):
+        self.name = name
         self.image_path = image_path
         self.image = cv2.imread(self.image_path, 0)
         if (self.image.shape[1] != self.width) or (self.image.shape[0] != self.height):
@@ -32,13 +38,17 @@ class Image:
         self.original_mag = self.mag
         self.original_phase = self.phase
 
-    def save( self ):
+    def save(self):
         # img_mag = ifftshift(np.multiply(self.mag, 1))
         # img_mag = ifft2(img_mag)
         # img_phase = ifftshift(100 * np.exp(np.multiply(1j, self.phase)))
         # img_phase = ifft2(img_phase)
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
+        self.image_url = processedImagePath+"{self.name}.png"
+        self.mag_url = processedImagePath+"{self.name}_mag.png"
+        self.phase_url = processedImagePath+"{self.name}_phase.png"
+
         self.image_path = f".\\storage\\processed\\{self.name}.png"
         self.image_mag_path = f".\\storage\\processed\\{self.name}_mag.png"
         self.image_phase_path = f".\\storage\\processed\\{self.name}_phase.png"
@@ -62,5 +72,7 @@ class Image:
 
         for x in range(int(x1), int(x2)):
             for y in range(int(y1), int(y2)):
-                self.mag[self.height-1-y, x] = self.original_mag[self.height-1-y, x]
-                self.phase[self.height-1-y, x] = self.original_phase[self.height-1-y, x]
+                self.mag[self.height-1-y,
+                         x] = self.original_mag[self.height-1-y, x]
+                self.phase[self.height-1-y,
+                           x] = self.original_phase[self.height-1-y, x]
