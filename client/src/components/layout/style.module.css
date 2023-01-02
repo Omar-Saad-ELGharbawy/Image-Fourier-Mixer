@@ -15,3 +15,13 @@
   flex-direction: column;
   align-items: center;
 }
+.Col{
+margin-top: 10%;
+}
+ 
+.row1 {
+    margin-right: -5px;
+    margin-left: -5px;
+    margin-top: 10px;
+
+}
