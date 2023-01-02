@@ -25,4 +25,5 @@
   background: -webkit-linear-gradient(hsl(224deg 65% 21%),hsl(195deg 83% 40%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-top: 1px;
 }

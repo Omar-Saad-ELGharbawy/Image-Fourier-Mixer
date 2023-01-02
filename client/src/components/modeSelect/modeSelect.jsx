@@ -97,7 +97,6 @@ const ModeSelect = ({ type }) => {
 
   return (
     <Col>
-      <p className={style.title}>Magnitude</p>
       <Row
         className={
           type === 1
@@ -109,11 +108,11 @@ const ModeSelect = ({ type }) => {
             : style.unselected
         }
       >
+        <p className={style.title}>Magnitude</p>
         <button className={style.button} onClick={() => on_click(true)}>
           <Image img={type === 1 ? mag1 : mag2} />
         </button>
       </Row>
-      <p className={style.title}>Phase</p>
       <Row
         className={
           type === 1
@@ -125,6 +124,7 @@ const ModeSelect = ({ type }) => {
             : style.unselected
         }
       >
+        <p className={style.title}>Phase</p>
         <button className={style.button} onClick={() => on_click(false)}>
           <Image img={type === 1 ? phase1 : phase2} />
         </button>

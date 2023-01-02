@@ -8,12 +8,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 40vh;
+  /* height: -10vh; */
 }
 .outputCol {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -60px;
 }
 .Col{
 margin-top: 10%;
