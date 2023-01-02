@@ -1,6 +1,8 @@
 .selected {
-  margin: 10px;
-  border: 2px red solid;
+  border: 7px solid transparent;
+  border-image: linear-gradient(to right, hsl(224deg 65% 21%),hsl(195deg 83% 40%)) 1;
+  border-radius: 20px;
+ 
 }
 .unselected {
   margin: 10px;
@@ -12,4 +14,15 @@
   border: none;
   background-color: transparent;
   padding: 0.5rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap'); 
+.title{
+  font-size: 3vmin;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  background: -webkit-linear-gradient(hsl(224deg 65% 21%),hsl(195deg 83% 40%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

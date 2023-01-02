@@ -97,6 +97,7 @@ const ModeSelect = ({ type }) => {
 
   return (
     <Col>
+      <p className={style.title}>Magnitude</p>
       <Row
         className={
           type === 1
@@ -112,7 +113,7 @@ const ModeSelect = ({ type }) => {
           <Image img={type === 1 ? mag1 : mag2} />
         </button>
       </Row>
-
+      <p className={style.title}>Phase</p>
       <Row
         className={
           type === 1
