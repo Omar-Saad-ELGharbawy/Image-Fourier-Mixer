@@ -30,7 +30,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg'}   # Extension Allowed
 #               check if the file has an allowed extension or not
 #       Return: True or Flase
 
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -87,7 +86,7 @@ def upload_file():
 
 # ----------------------------------------------------------------------------------------------------------------------#
 # API description:
-#       Fuction: Upload the file to the server
+#       Fuction: Update the file to the server
 #       Return: File URL
 
 @ app.route("/api/update", methods=['POST'])
