@@ -17,8 +17,9 @@ class Image:
     # image_mag_path = ""
     # image_phase_path = ""
     # dimensions = {}
-
-
+    image_url = ""
+    mag_url = ""
+    phase_url = ""
 
     def __init__(self):
         self.image_url = ""
@@ -50,13 +51,13 @@ class Image:
         # img_phase = ifft2(img_phase)
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
-        now = datetime.now() 
-        file_date =now.strftime("%m/%d/%Y, %H:%M:%S")+".wav"
-        file_date=secure_filename(file_date)
+        now = datetime.now()
+        file_date = now.strftime("%m/%d/%Y, %H:%M:%S")
+        file_date = secure_filename(file_date)
 
-        self.image_url = processedImagePath+"{self.name}"+file_date+".png"
-        self.mag_url = processedImagePath+"{self.name}"+file_date+"_mag.png"
-        self.phase_url = processedImagePath+"{self.name}"+file_date+"_phase.png"
+        self.image_url = processedImagePath+self.name+file_date+".png"
+        self.mag_url = processedImagePath+self.name+file_date+"_mag.png"
+        self.phase_url = processedImagePath + self.name+file_date+"_phase.png"
 
         self.image_path = f".\\storage\\processed\\{self.name+file_date}.png"
         self.image_mag_path = f".\\storage\\processed\\{self.name+file_date}_mag.png"
@@ -81,5 +82,7 @@ class Image:
 
         for x in range(int(x1), int(x2)):
             for y in range(int(y1), int(y2)):
-                self.mag[self.height-1-y,x] = self.original_mag[self.height-1-y, x]
-                self.phase[self.height-1-y,x] = self.original_phase[self.height-1-y, x]
+                self.mag[self.height-1-y,
+                         x] = self.original_mag[self.height-1-y, x]
+                self.phase[self.height-1-y,
+                           x] = self.original_phase[self.height-1-y, x]

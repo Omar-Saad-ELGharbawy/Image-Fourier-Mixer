@@ -152,20 +152,22 @@ def crop():
 
 @ app.route("/api/delete", methods=['POST'])
 def delete():
-
+    print("delete called")
     # get request data
-    data = request.get_json()
-
+    data = request.form
+    print("get json called")
     # get the dimensions
     type = data["type"]  # 1 or 2
-
+    print("type called")
     print(type)
 
-    if (data["type"] == 1):
+    if (data["type"] == "1"):
         Processing.img1 = Image()
 
-    elif (data["type"] == 2):
+    elif (data["type"] == "2"):
         Processing.img2 = Image()
+
+    Processing.select_and_save_mixed_img()
 
     return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#

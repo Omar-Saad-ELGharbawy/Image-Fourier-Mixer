@@ -16,6 +16,12 @@ const UploadImage = ({ type }) => {
     setMag2,
     setPhase1,
     setPhase2,
+    setMixedImage,
+    selectMag2,
+
+    selectPhase1,
+    selectPhase2,
+    selectMag1,
   } = useContext(AppContext);
 
   const inputFileRef = useRef(null);
@@ -29,21 +35,6 @@ const UploadImage = ({ type }) => {
     inputFileRef.current.click();
   };
 
-  // handle on upload file
-  const handle_file_upload = async (e) => {
-    let inputFile = e.target.files[0];
-    if (inputFile) {
-      if (type === 1) {
-        setImg1(URL.createObjectURL(inputFile));
-      } else {
-        setImg2(URL.createObjectURL(inputFile));
-      }
-      setIsUploaded(true);
-      console.log(inputFile);
-      upload_image(inputFile);
-    }
-  };
-
   const close_image = async (e) => {
     setIsUploaded(false);
     inputFileRef.current.value = null;
@@ -51,10 +42,45 @@ const UploadImage = ({ type }) => {
       setImg1(defualtImage);
       setMag1(defualtImage);
       setPhase1(defualtImage);
+      selectMag1(false);
+      selectPhase1(false);
     } else {
       setImg2(defualtImage);
       setMag2(defualtImage);
       setPhase2(defualtImage);
+      selectMag2(false);
+      selectPhase2(false);
+    }
+
+    const formData = new FormData();
+    formData.append("type", type);
+    console.log(type);
+    axios.post("/delete", formData).then((res) => {
+      console.log(res.data);
+      setImg1(res.data.img1 !== "" ? res.data.img1 : defualtImage);
+      setMag1(res.data.mag1 !== "" ? res.data.mag1 : defualtImage);
+      setPhase1(res.data.phase1 !== "" ? res.data.phase1 : defualtImage);
+      setImg2(res.data.img2 !== "" ? res.data.img2 : defualtImage);
+      setMag2(res.data.mag2 !== "" ? res.data.mag2 : defualtImage);
+      setPhase2(res.data.phase2 !== "" ? res.data.phase2 : defualtImage);
+      setMixedImage(
+        res.data.mixed_img !== "" ? res.data.mixed_img : defualtImage
+      );
+    });
+  };
+
+  // handle on upload file
+  const handle_file_upload = async (e) => {
+    let inputFile = e.target.files[0];
+    if (inputFile) {
+      // if (type === 1) {
+      //   setImg1(URL.createObjectURL(inputFile));
+      // } else {
+      //   setImg2(URL.createObjectURL(inputFile));
+      // }
+      setIsUploaded(true);
+      console.log(inputFile);
+      upload_image(inputFile);
     }
   };
 
@@ -66,15 +92,16 @@ const UploadImage = ({ type }) => {
     console.log(formData);
     axios.post("/upload", formData).then((res) => {
       console.log(res.data);
-      if (type === 1) {
-        setImg1(res.data.img_url);
-        setMag1(res.data.mag_url);
-        setPhase1(res.data.phase_url);
-      } else {
-        setImg2(res.data.img_url);
-        setMag2(res.data.mag_url);
-        setPhase2(res.data.phase_url);
-      }
+
+      setImg1(res.data.img1 !== "" ? res.data.img1 : defualtImage);
+      setMag1(res.data.mag1 !== "" ? res.data.mag1 : defualtImage);
+      setPhase1(res.data.phase1 !== "" ? res.data.phase1 : defualtImage);
+      setImg2(res.data.img2 !== "" ? res.data.img2 : defualtImage);
+      setMag2(res.data.mag2 !== "" ? res.data.mag2 : defualtImage);
+      setPhase2(res.data.phase2 !== "" ? res.data.phase2 : defualtImage);
+      setMixedImage(
+        res.data.mixed_img !== "" ? res.data.mixed_img : defualtImage
+      );
     });
   };
 
@@ -102,9 +129,9 @@ const UploadImage = ({ type }) => {
         </div>
       ) : (
         <button className={style.empty} onClick={handle_button_click}>
-        <article>
-          <p>Upload an image</p>
-        </article>  
+          <article>
+            <p>Upload an image</p>
+          </article>
         </button>
       )}
 

@@ -14,6 +14,7 @@ class Processing:
     img1 = Image()
     img2 = Image()
     mixed_image_path = ""
+    mixed_image_url = ""
 
     phase1 = False
     phase2 = False
@@ -21,25 +22,27 @@ class Processing:
     mag2 = False
 
     @staticmethod
-    def save_mixed_image(self, mag, phase):
+    def save_mixed_image(mag, phase):
         mixed_image = ifftshift(np.multiply(
             mag, np.exp(np.multiply(1j, phase))))
         mixed_image = ifft2(mixed_image)
         # mixed_image = cv2.equalizeHist(mixed_image.astype(np.uint8))
         # mixed_image = np.abs(mixed_image)
-        now = datetime.now() 
-        file_date =now.strftime("%m/%d/%Y, %H:%M:%S")+".wav"
-        file_date=secure_filename(file_date)
+        now = datetime.now()
+        file_date = now.strftime("%m/%d/%Y, %H:%M:%S")
+        file_date = secure_filename(file_date)
 
-        self.mixed_image_url = processedImagePath+"mixed_img"+file_date+".png"
+        Processing.mixed_image_url = processedImagePath+"mixed_img"+file_date+".png"
 
-        self.mixed_image_path = f".\\storage\\processed\\mixed_img{file_date}.png"
+        Processing.mixed_image_path = f".\\storage\\processed\\mixed_img{file_date}.png"
 
-        plt.imsave(f".\\storage\\processed\mixed_img.png",
-                    mixed_image.real, cmap='gray')
+        plt.imsave(Processing.mixed_image_path, mixed_image.real, cmap='gray')
 
     @staticmethod
     def select_and_save_mixed_img():
+        if (Processing.img1.image_url == "" and Processing.img2.image_url == ""):
+            Processing.mixed_image_url = ""
+            return
         if (Processing.phase1 and not Processing.mag2):
             Processing.save_mixed_image(
                 1, Processing.img1.phase)
@@ -60,12 +63,12 @@ class Processing:
                 Processing.img2.mag, Processing.img1.phase)
 
     @staticmethod
-    def getPaths(self):
+    def getPaths():
         return {
-            "img1": self.img1.image_url,
-            "mag1": self.img1.mag_url,
-            "phase1": self.img1.phase_url,
-            "img2": self.img2.image_url,
-            "mag2": self.img2.mag_url,
-            "phase2": self.img2.phase_url,
-            "mixed_img": self.mixed_image_url}
+            "img1": Processing.img1.image_url,
+            "mag1": Processing.img1.mag_url,
+            "phase1": Processing.img1.phase_url,
+            "img2": Processing.img2.image_url,
+            "mag2": Processing.img2.mag_url,
+            "phase2": Processing.img2.phase_url,
+            "mixed_img": Processing.mixed_image_url}

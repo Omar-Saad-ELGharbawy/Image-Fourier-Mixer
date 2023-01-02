@@ -24,6 +24,12 @@ const ModeSelect = ({ type }) => {
     isSelectedMag2,
     selectMag2,
     setMixedImage,
+    setImg1,
+    setImg2,
+    setMag1,
+    setMag2,
+    setPhase1,
+    setPhase2,
   } = useContext(AppContext);
 
   const on_click = (isMag) => {
@@ -82,9 +88,15 @@ const ModeSelect = ({ type }) => {
 
     axios.post("/update", data).then((res) => {
       console.log(res.data);
-
-      axios.get(res.data.mixed_img);
-      setMixedImage(res.data.mixed_img);
+      setImg1(res.data.img1 !== "" ? res.data.img1 : defualtImage);
+      setMag1(res.data.mag1 !== "" ? res.data.mag1 : defualtImage);
+      setPhase1(res.data.phase1 !== "" ? res.data.phase1 : defualtImage);
+      setImg2(res.data.img2 !== "" ? res.data.img2 : defualtImage);
+      setMag2(res.data.mag2 !== "" ? res.data.mag2 : defualtImage);
+      setPhase2(res.data.phase2 !== "" ? res.data.phase2 : defualtImage);
+      setMixedImage(
+        res.data.mixed_img !== "" ? res.data.mixed_img : defualtImage
+      );
     });
     setStatus(false);
   };
