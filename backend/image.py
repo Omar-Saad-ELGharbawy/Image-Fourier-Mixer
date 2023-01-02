@@ -21,7 +21,7 @@ class Image:
         self.name= name
         self.image_path = image_path
         self.image = cv2.imread(self.image_path, 0)
-        if (self.image.shape[1] != self.width) & (self.image.shape[0] != self.height):
+        if (self.image.shape[1] != self.width) or (self.image.shape[0] != self.height):
             self.image = cv2.resize(self.image, (self.width, self.height))
 
     def calculate_magnitude_and_phase(self):
@@ -33,18 +33,21 @@ class Image:
         self.original_phase = self.phase
 
     def save( self ):
-        img_mag = ifftshift(np.multiply(self.mag, 1))
-        img_mag = ifft2(img_mag)
-        img_phase = ifftshift(100 * np.exp(np.multiply(1j, self.phase)))
-        img_phase = ifft2(img_phase)
+        # img_mag = ifftshift(np.multiply(self.mag, 1))
+        # img_mag = ifft2(img_mag)
+        # img_phase = ifftshift(100 * np.exp(np.multiply(1j, self.phase)))
+        # img_phase = ifft2(img_phase)
         # img_phase = cv2.equalizeHist(img_phase.astype(np.uint8))
         # img_mag = cv2.equalizeHist(img_mag.astype(np.uint8))
         self.image_path = f".\\storage\\processed\\{self.name}.png"
         self.image_mag_path = f".\\storage\\processed\\{self.name}_mag.png"
         self.image_phase_path = f".\\storage\\processed\\{self.name}_phase.png"
+        # plt.imsave(self.image_path, self.image, cmap='gray')
+        # plt.imsave(self.image_mag_path, img_mag.real, cmap='gray')
+        # plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
         plt.imsave(self.image_path, self.image, cmap='gray')
-        plt.imsave(self.image_mag_path, img_mag.real, cmap='gray')
-        plt.imsave(self.image_phase_path, img_phase.real, cmap='gray')
+        plt.imsave(self.image_mag_path, np.log(self.mag), cmap='gray')
+        plt.imsave(self.image_phase_path, self.real, cmap='gray')
 
     def crop_mag_and_phase(self, **dimenions):
         # max_height = self.image.shape[0]-1

@@ -20,7 +20,6 @@ class Processing:
             mag, np.exp(np.multiply(1j, phase))))
         mixed_image = ifft2(mixed_image)
         # mixed_image = cv2.equalizeHist(mixed_image.astype(np.uint8))
-
         # mixed_image = np.abs(mixed_image)
         plt.imsave(f".\\storage\\processed\mixed_img.png",
                 mixed_image.real, cmap='gray')
