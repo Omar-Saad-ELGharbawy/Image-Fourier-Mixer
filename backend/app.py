@@ -125,7 +125,7 @@ def crop():
     # get the dimensions
     dimensions = data["dimensions"]
     type = data["type"]  # 1 or 2
-    isSelectIn = data["isSelectIn"]
+    isSelectIn = data["isSelectIn"]  # True or False
 
     print(dimensions, type, isSelectIn)
 
