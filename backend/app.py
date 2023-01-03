@@ -10,6 +10,7 @@ from image import Image
 # Configurations
 app = Flask(__name__)
 
+# set the folders to save the original and processed images
 originalImgsFolder = '.\\storage\\original\\'
 processedImgsFolder = '.\\storage\\processed\\'
 
@@ -24,20 +25,22 @@ CORS(app)
 ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg'}   # Extension Allowed
 # ----------------------------------------------------------------------------------------------------------------------#
 
+# -------------------------------------------------------- Methods -----------------------------------------------------#
+
 # ----------------------------------------------------------------------------------------------------------------------#
 # function description:
 #       Arguments: File name
 #               check if the file has an allowed extension or not
 #       Return: True or Flase
-
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 # ----------------------------------------------------------------------------------------------------------------------#
 
-
-# -------------------------------------------------------- Methods -----------------------------------------------------#
+# function description:
+#       Arguments: File
+#               get the name of the file without the extension
+#       Return: File name
 def get_image_name(file):
     return file.filename.split('.')[0]
 
@@ -47,8 +50,6 @@ def get_image_name(file):
 # API description:
 #       Fuction: Upload the file to the server
 #       Return: File URL
-
-
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
 
@@ -73,16 +74,20 @@ def upload_file():
     file.save(img_path)
     img_url = originalImgsFolder + file.filename
 
+    # create an image object
     img = Image()
+    # read the image
     img.read(img_url, get_image_name(file))
     img.calculate_magnitude_and_phase()
+    # save the image to the server
     img.save()
 
+    # check the type (image1 or image2) of the upload image and store it in the static object
     if (data["type"] == "1"):
         Processing.img1 = img
     elif (data["type"] == "2"):
         Processing.img2 = img
-
+    # return the pathes to the frontend
     return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
@@ -97,24 +102,21 @@ def update():
 
     # get request data
     data = request.get_json()
-
+    # store the selected components of the images (magnitude or phase) in the static object flags
     Processing.phase1 = data["phase_1_selected"]
     Processing.phase2 = data["phase_2_selected"]
     Processing.mag1 = data["mag_1_selected"]
     Processing.mag2 = data["mag_2_selected"]
-
-    print(Processing.phase1, Processing.phase2,
-          Processing.mag1, Processing.mag2)
-
+    # check the selected components of the images and save the mixed image
     Processing.select_and_save_mixed_img()
-
+    # return the pathes to the frontend
     return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 
 # ----------------------------------------------------------------------------------------------------------------------#
 # API description:
-#       Fuction: Upload the file to the server
+#       Fuction: Crop image magnitude and phase 
 #       Return: File URL
 @ app.route("/api/crop", methods=['POST'])
 def crop():
@@ -126,49 +128,37 @@ def crop():
     dimensions = data["dimensions"]
     type = data["type"]  # 1 or 2
     isSelectIn = data["isSelectIn"]  # True or False
-
-    print(dimensions, type, isSelectIn)
-
-    if (data["type"] == 1):
+    #  check the selected image and crop its magnitude and phase
+    if (type == 1):
         print("Cropping in 1")
         Processing.img1.crop_mag_and_phase( isSelectIn , **dimensions)
-        # Processing.img1.save()
-
-    elif (data["type"] == 2):
+    elif (type == 2):
         print("Cropping in 2")
         Processing.img2.crop_mag_and_phase( isSelectIn , **dimensions)
-        # Processing.img2.save()
-
+    # save the mixed image
     Processing.select_and_save_mixed_img()
-
+    # return the pathes to the frontend
     return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
 # ----------------------------------------------------------------------------------------------------------------------#
 # API description:
-#       Fuction: Upload the file to the server
+#       Fuction: delete the selected image
 #       Return: File URL
-
-
 @ app.route("/api/delete", methods=['POST'])
 def delete():
-    print("delete called")
     # get request data
     data = request.form
-    print("get json called")
-    # get the dimensions
     type = data["type"]  # 1 or 2
-    print("type called")
-    print(type)
 
-    if (data["type"] == "1"):
+    # check the selected image and delete it and create a new empty image object
+    if (type == "1"):
         Processing.img1 = Image()
-
-    elif (data["type"] == "2"):
+    elif (type == "2"):
         Processing.img2 = Image()
-
+    # save the mixed image after deleting image 1 or 2
     Processing.select_and_save_mixed_img()
-
+    # return the pathes to the frontend
     return Processing.getPaths(), 200
 # ----------------------------------------------------------------------------------------------------------------------#
 
