@@ -4,7 +4,14 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const Switch = () => {
   return (
-    <BootstrapSwitchButton  checked={true} onlabel="Low Pass" offlabel="High Pass" onstyle="light" offstyle="light" style={style.switch}/>
+    <BootstrapSwitchButton  
+    checked={true} 
+    width={200}
+    onlabel="Low Pass" 
+    offlabel="High Pass" 
+    onstyle="light active" 
+    offstyle="light active" 
+    style={style.switch}/>
   )
 }
 
