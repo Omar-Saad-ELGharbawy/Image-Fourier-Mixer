@@ -22,16 +22,16 @@
 ### Upload images
 ![2](https://user-images.githubusercontent.com/84602951/210450484-e8413e68-5799-4219-b893-034f1d2c4011.png)
 
-- Display magnitude and phase of each image in fourier domain.
+### Display magnitude and phase of each image in fourier domain.
 ![12](https://user-images.githubusercontent.com/84602951/210451605-3d0874b1-0994-4628-9a42-0e0ad7033dc5.png)
 
-- Select magnitude or phase component of one image only to display  uniform magnitude or uniform phase of image in time domain.
+### Select magnitude or phase component of one image only to display  uniform magnitude or uniform phase of image in time domain.
 ![3](https://user-images.githubusercontent.com/84602951/210451764-efcefe52-bc2c-46d9-9607-cc3be85f4c23.png)
 
-- Select magnitude or phase component of each image and display the mixed image in time domain.
+### Select magnitude or phase component of each image and display the mixed image in time domain.
 ![4](https://user-images.githubusercontent.com/84602951/210451810-ffdfbabc-09c1-4a25-b5cb-ddaf572652ad.png)
 
-- Crop in magnitude or phase of each image and show the crop effect on the mixed image on real time.
+### Crop in magnitude or phase of each image and show the crop effect on the mixed image on real time.
 ![6](https://user-images.githubusercontent.com/84602951/210451835-b9d7a34a-8c5c-4faf-8c97-ca0ddf7fbede.png)
 
 
