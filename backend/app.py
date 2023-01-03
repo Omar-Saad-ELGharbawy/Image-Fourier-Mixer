@@ -131,14 +131,13 @@ def crop():
 
     if (data["type"] == 1):
         print("Cropping in 1")
-        Processing.img1.crop_mag_and_phase(**dimensions)
+        Processing.img1.crop_mag_and_phase( isSelectIn , **dimensions)
         # Processing.img1.save()
-        name = Processing.img1.name
 
     elif (data["type"] == 2):
-        Processing.img2.crop_mag_and_phase(**dimensions)
+        print("Cropping in 2")
+        Processing.img2.crop_mag_and_phase( isSelectIn , **dimensions)
         # Processing.img2.save()
-        name = Processing.img2.name
 
     Processing.select_and_save_mixed_img()
 

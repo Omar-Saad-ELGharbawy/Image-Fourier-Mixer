@@ -69,20 +69,21 @@ class Image:
         plt.imsave(self.image_mag_path, np.log(self.mag), cmap='gray')
         plt.imsave(self.image_phase_path, self.phase, cmap='gray')
 
-    def crop_mag_and_phase(self, **dimenions):
-        # max_height = self.image.shape[0]-1
-        x1 = dimenions["x"] * self.width / 100
-        x2 = x1 + (dimenions["width"] * self.width / 100)
-        y2 = (100 - dimenions["y"]) * self.height / 100
-        y1 = y2 - (dimenions["height"] * self.height / 100)
-    #     cutted_img = np.ones_like(image)
-    #     cutted_img = np.full_like(image,235)
-        self.mag = np.zeros_like(self.original_mag)
-        self.phase = np.zeros_like(self.original_phase)
+    def crop_mag_and_phase(self, select_in, **dimenions ):
+        x1 = int(dimenions["x"] * self.width / 100)
+        x2 = int(x1 + (dimenions["width"] * self.width / 100))
+        y2 = int((100 - dimenions["y"]) * self.height / 100)
+        y1 = int(y2 - (dimenions["height"] * self.height / 100))
 
-        for x in range(int(x1), int(x2)):
-            for y in range(int(y1), int(y2)):
-                self.mag[self.height-1-y,
-                         x] = self.original_mag[self.height-1-y, x]
-                self.phase[self.height-1-y,
-                           x] = self.original_phase[self.height-1-y, x]
+        if select_in  :
+            print("Seleect in")
+            self.mag = np.zeros_like(self.original_mag)
+            self.phase = np.zeros_like(self.original_phase)
+            self.mag[self.height-1-y2 : self.height-1-y1 , x1:x2] = self.original_mag[self.height-1-y2 : self.height-1-y1 , x1:x2]
+            self.phase[self.height-1-y2 : self.height-1-y1 , x1:x2] = self.original_phase[self.height-1-y2 : self.height-1-y1 , x1:x2]
+        elif not select_in :
+            print("Seleect out")
+            self.mag = np.copy(self.original_mag)
+            self.phase = np.copy(self.original_phase)
+            self.mag[self.height-1-y2 : self.height-1-y1 , x1:x2] = 0
+            self.phase[self.height-1-y2 : self.height-1-y1 , x1:x2] = 0

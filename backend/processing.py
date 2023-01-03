@@ -22,11 +22,14 @@ class Processing:
     mag2 = False
 
     @staticmethod
-    def save_mixed_image(mag, phase):
-        mixed_image = ifftshift(np.multiply(
-            mag, np.exp(np.multiply(1j, phase))))
+    def save_mixed_image(mag, phase , cv = False):
+        mixed_image = ifftshift(np.multiply( mag, np.exp(np.multiply(1j, phase))))
         mixed_image = ifft2(mixed_image)
-        # mixed_image = cv2.equalizeHist(mixed_image.astype(np.uint8))
+
+        if cv :
+            mixed_image = cv2.equalizeHist(mixed_image.astype(np.uint8))
+
+        
         # mixed_image = np.abs(mixed_image)
         now = datetime.now()
         file_date = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -44,17 +47,16 @@ class Processing:
             Processing.mixed_image_url = ""
             return
         if (Processing.phase1 and not Processing.mag2):
-            Processing.save_mixed_image(
-                1, Processing.img1.phase)
+            Processing.save_mixed_image(100, Processing.img1.phase)
         elif (Processing.phase2 and not Processing.mag1):
             Processing.save_mixed_image(
-                1, Processing.img2.phase)
+                100, Processing.img2.phase)
         elif (Processing.mag1 and not Processing.phase2):
             Processing.save_mixed_image(
-                Processing.img1.mag, 0)
+                Processing.img1.mag, 0 , True)
         elif (Processing.mag2 and not Processing.phase1):
             Processing.save_mixed_image(
-                Processing.img2.mag, 0)
+                Processing.img2.mag, 0 , True)
         elif (Processing.mag1 and Processing.phase2):
             Processing.save_mixed_image(
                 Processing.img1.mag, Processing.img2.phase)
