@@ -67,8 +67,6 @@ const ModeSelect = ({ type }) => {
       }
     }
     setStatus(true);
-
-    // send_request();
   };
 
   const send_request = () => {

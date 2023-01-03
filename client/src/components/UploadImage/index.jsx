@@ -106,9 +106,9 @@ const UploadImage = ({ type }) => {
     });
   };
 
-  return (   
+  return (
     <div className={style.container} style={{}}>
-    <Switch/>
+      <Switch type={type} />
       <button
         className={style.close}
         onClick={close_image}

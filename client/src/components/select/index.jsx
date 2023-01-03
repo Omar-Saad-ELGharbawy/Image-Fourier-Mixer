@@ -20,22 +20,30 @@ const Select = ({ img, type }) => {
     setPhase1,
     setPhase2,
     setMixedImage,
+    isSelectIn1,
+    isSelectIn2,
   } = useContext(AppContext);
 
   // Methods
   const on_change = (perc) => {
-    axios.post("/crop", { dimensions: perc, type: type }).then((res) => {
-      console.log(res.data);
-      setImg1(res.data.img1 !== "" ? res.data.img1 : defualtImage);
-      setMag1(res.data.mag1 !== "" ? res.data.mag1 : defualtImage);
-      setPhase1(res.data.phase1 !== "" ? res.data.phase1 : defualtImage);
-      setImg2(res.data.img2 !== "" ? res.data.img2 : defualtImage);
-      setMag2(res.data.mag2 !== "" ? res.data.mag2 : defualtImage);
-      setPhase2(res.data.phase2 !== "" ? res.data.phase2 : defualtImage);
-      setMixedImage(
-        res.data.mixed_img !== "" ? res.data.mixed_img : defualtImage
-      );
-    });
+    axios
+      .post("/crop", {
+        dimensions: perc,
+        type: type,
+        isSelectIn: type === 1 ? isSelectIn1 : isSelectIn2,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setImg1(res.data.img1 !== "" ? res.data.img1 : defualtImage);
+        setMag1(res.data.mag1 !== "" ? res.data.mag1 : defualtImage);
+        setPhase1(res.data.phase1 !== "" ? res.data.phase1 : defualtImage);
+        setImg2(res.data.img2 !== "" ? res.data.img2 : defualtImage);
+        setMag2(res.data.mag2 !== "" ? res.data.mag2 : defualtImage);
+        setPhase2(res.data.phase2 !== "" ? res.data.phase2 : defualtImage);
+        setMixedImage(
+          res.data.mixed_img !== "" ? res.data.mixed_img : defualtImage
+        );
+      });
   };
 
   return (

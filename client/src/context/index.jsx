@@ -33,6 +33,8 @@ export const FileContextProvider = ({ children }) => {
   const [isSelectedPhase2, selectPhase2] = useState(false);
   const [isSelectedMag1, selectMag1] = useState(false);
   const [isSelectedMag2, selectMag2] = useState(false);
+  const [isSelectIn1, selectIn1] = useState(true);
+  const [isSelectIn2, selectIn2] = useState(true);
 
   return (
     <AppContext.Provider
@@ -67,6 +69,10 @@ export const FileContextProvider = ({ children }) => {
         selectMag2,
         mixedImage,
         setMixedImage,
+        isSelectIn1,
+        selectIn1,
+        isSelectIn2,
+        selectIn2,
       }}
     >
       {children}
