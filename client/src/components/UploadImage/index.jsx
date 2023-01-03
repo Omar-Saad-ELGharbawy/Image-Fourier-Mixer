@@ -4,6 +4,7 @@ import Select from "../select/index";
 import axios from "../../globals/api/axios";
 import { AppContext } from "../../context/index";
 import { defualtImage } from "../../globals/constants/constants";
+import Switch from "../switch/switch";
 
 const UploadImage = ({ type }) => {
   // fetch files from the context
@@ -105,8 +106,9 @@ const UploadImage = ({ type }) => {
     });
   };
 
-  return (
+  return (   
     <div className={style.container} style={{}}>
+    <Switch/>
       <button
         className={style.close}
         onClick={close_image}

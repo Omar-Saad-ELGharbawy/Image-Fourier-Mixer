@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import { FileContextProvider } from "./context/index.jsx";
 import "./index.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
