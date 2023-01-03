@@ -16,10 +16,10 @@
 
 ## Features
 
-- Default Page
+### Default Page
 ![1](https://user-images.githubusercontent.com/84602951/210450461-f5081a7f-32e1-4742-907f-330dff954025.png)
 
-- Upload images
+### Upload images
 ![2](https://user-images.githubusercontent.com/84602951/210450484-e8413e68-5799-4219-b893-034f1d2c4011.png)
 
 - Display magnitude and phase of each image in fourier domain.
