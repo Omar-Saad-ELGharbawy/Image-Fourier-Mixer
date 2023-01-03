@@ -42,25 +42,10 @@ class Processing:
     def select_and_save_mixed_img():
         if (Processing.img1.image_url == "" and Processing.img2.image_url == ""):
             Processing.mixed_image_url = ""
-            return
-        if (Processing.phase1 and not Processing.mag2):
-            Processing.save_mixed_image(
-                1, Processing.img1.phase)
-        elif (Processing.phase2 and not Processing.mag1):
-            Processing.save_mixed_image(
-                1, Processing.img2.phase)
-        elif (Processing.mag1 and not Processing.phase2):
-            Processing.save_mixed_image(
-                Processing.img1.mag, 0)
-        elif (Processing.mag2 and not Processing.phase1):
-            Processing.save_mixed_image(
-                Processing.img2.mag, 0)
-        elif (Processing.mag1 and Processing.phase2):
-            Processing.save_mixed_image(
-                Processing.img1.mag, Processing.img2.phase)
-        elif (Processing.mag2 and Processing.phase1):
-            Processing.save_mixed_image(
-                Processing.img2.mag, Processing.img1.phase)
+        else:
+            magVal = Processing.img1.mag if Processing.mag1 else Processing.img2.mag if Processing.mag2 else 1
+            phaseVal = Processing.img1.phase if Processing.phase1 else Processing.img2.phase if Processing.phase2 else 0
+            Processing.save_mixed_image(magVal, phaseVal)
 
     @staticmethod
     def getPaths():
