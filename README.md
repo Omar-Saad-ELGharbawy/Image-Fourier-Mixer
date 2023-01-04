@@ -38,16 +38,14 @@
 ## Tools
 
 1. Frontend :
-* HTML 
+* React Js 
 * CSS 
-* Javascript
-* React
 
 2. Backend :
 * Python
 * Flask
 
-## Science
+## Theoretical Technique
 ### Fourier Transform 
 - Fourier transform of 2d images and calculating **Magnitude** and **Phase** of images.
 
@@ -57,11 +55,13 @@
 
 - **Inverse Fourier Transform** of mixed image to display it in **time domain**.
 
-### Object oriented programming :
 
-1. Image Class contains all image information and methods to :
+## Project Structure
+### Image Class:
+1. Contains all image information and methods to :
 - Read and resize image.
 - Claculate fourier transform of image.
 - Crop in image phase and magnitude.
 
-2. Processing class with static functions and static objects of Image Class to store image data in it and to be used in the backend.
+### Processing Class:
+- Contains static functions and static objects of Image model to store data.
