@@ -58,10 +58,10 @@
 
 ## Project Structure
 ### Image Class:
-1. Contains all image information and methods to :
-- Read and resize image.
-- Claculate fourier transform of image.
-- Crop in image phase and magnitude.
+- Contains all image information and methods to :
+1. Read and resize image.
+2. Claculate fourier transform of image.
+3. Crop in image phase and magnitude.
 
 ### Processing Class:
 - Contains static functions and static objects of Image model to store data.
