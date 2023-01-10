@@ -52,7 +52,10 @@ class Processing:
         # if both images are empty, set the mixed image url to be empty
         if (Processing.img1.image_url == "" and Processing.img2.image_url == ""):
             Processing.mixed_image_url = ""
+            print("No Image")
         # select the image components to be mixed from the flags
+        elif not(Processing.mag1 or Processing.mag2 or Processing.phase1 or Processing.phase2):
+            Processing.mixed_image_url = ""
         else:
             magVal = Processing.img1.mag if Processing.mag1 else Processing.img2.mag if Processing.mag2 else 100
             phaseVal = Processing.img1.phase if Processing.phase1 else Processing.img2.phase if Processing.phase2 else 0
